@@ -1,5 +1,8 @@
 Create directory test1
+```console
 mkdir test1
+```
+
     Create file test1.txt inside the test1 directory.
 cd test1/
 cat > test1.txt
