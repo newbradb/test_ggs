@@ -6,7 +6,7 @@ mkdir test1
 ### Create file test1.txt inside the test1 directory.
 cd test1/
 cat > test1.txt
-    Create copy of folder test1 with name test2.
+    Create copy of folder test1 with name test2.  
 cp test1 test2
     Delete file test1.txt inside test2 directory.
 rm test2/test1.txt
