@@ -1,4 +1,4 @@
-Create directory test1
+- Create directory test1
 ```console
 mkdir test1
 ```
