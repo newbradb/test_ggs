@@ -49,6 +49,24 @@ test2
 
 ## Permissions
 
-1. Create test directory and block access for all to it.
-2. Try to remove that directory.
-3. Create simple script which prints current date. Try to execute it.
+###   1. Create test directory and block access for all to it.
+
+```console
+mkdir test
+chmod 000 test/
+```
+
+###   2. Try to remove that directory.
+
+```console
+rm -rf test/
+```
+
+###   3. Create simple script which prints current date. Try to execute it.
+
+```console
+#!/bin/bash
+
+date 
+```
+
