@@ -1,3 +1,5 @@
+## Basic work with files
+
 ### Create directory test1
 ```console
 -mkdir test1
@@ -44,3 +46,9 @@ test2
 ```console
 -cat test1/test1.txt
 ```
+
+## Permissions
+
+1. Create test directory and block access for all to it.
+2. Try to remove that directory.
+3. Create simple script which prints current date. Try to execute it.
