@@ -69,4 +69,21 @@ rm -rf test/
 
 date 
 ```
+### Log checking
+
+1. Count lines in the file test.txt.
+
+2. Show last 3 lines from the test.txt file. 
+
+3. Hom many uniq IP addresses accessed the website ? 
+
+4. IP address with most requests.
+
+5. Most popular link on webiste ? 
+
+6. Top 3 IP addresses by amoun of POST requests.
+
+7. Which IP addresses reived 403 error ? 
+
+Task with * . Write script to show which pages Google checked from the website 
 
