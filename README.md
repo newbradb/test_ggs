@@ -69,21 +69,50 @@ rm -rf test/
 
 date 
 ```
-### Log checking
 
-1. Count lines in the file test.txt.
+## Log checking
 
-2. Show last 3 lines from the test.txt file. 
+### 1. Count lines in the file test.txt.
 
-3. Hom many uniq IP addresses accessed the website ? 
+```console
+wc -l test.txt
+```
 
-4. IP address with most requests.
+### 2. Show last 3 lines from the test.txt file. 
 
-5. Most popular link on webiste ? 
+```console
+tail -n 3 text.txt
+```
 
-6. Top 3 IP addresses by amoun of POST requests.
+### 3. Hom many uniq IP addresses accessed the website ? 
 
-7. Which IP addresses reived 403 error ? 
+```console
+cat test.txt | sort | uniq -c -w20 | wc -l
+```
 
-Task with * . Write script to show which pages Google checked from the website 
+### 4. IP address with most requests.
+
+```console
+sort test.txt | uniq -c -w20 | sort -rn
+```
+
+### 5. Most popular link on webiste ? 
+
+```console
+awk '{print $7}' test.txt | uniq -c -w20 | sort -rn | head -n 1
+```
+
+### 6. Top 3 IP addresses by amount of POST requests.
+
+```console
+grep -i 'post' test.txt 
+```
+
+### 7. Which IP addresses recived 403 error ? 
+
+```console
+awk '{print $9}' test.txt | grep '403'
+```
+
+###Task with * . Write script to show which pages Google checked from the website 
 
