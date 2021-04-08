@@ -235,7 +235,7 @@ web 0/1 Init:0/1 0 0s
 web 0/1 Init:0/1 0 1s
 web 0/1 PodInitializing 0 2s
 web 1/1 Running 0 3s
-```console
+```
 
 - TEST
 
