@@ -131,3 +131,117 @@ awk '{print $9}' test.txt | grep '403'
 
 ###Task with * . Write script to show which pages Google checked from the website 
 
+###KUBER
+
+- Dockerfile, в котором будет описан образ:
+
+1. Запускающий web-сервер на порту 8000 (можно использоватьлюбой способ)
+2. Отдающий содержимое директории /app внутри контейнера
+(например, если в директории /app лежит файл homework.html, то при запуске контейнера данный файл должен быть доступен по
+URL http://localhost:8000/homework.html)
+
+- После того, как Dockerfile будет готов:
+В корне репозитория создайте директорию kubernetesintro/web и поместите туда готовый Dockerfile
+Соберите из Dockerfile образ контейнера и поместите его в публичный Container Registry (например, Docker Hub)
+
+- Напишем манифест web-pod.yaml для создания pod web c
+меткой app со значением web, содержащего один контейнер с
+названием web. Необходимо использовать ранее собранный образ
+с Docker Hub.
+При написании манифеста можно воспользоваться следующим шаблоном:
+
+```yaml
+apiVersion: v1 # Версия API
+kind: Pod # Объект, который создаем
+metadata:
+name: # Название Pod
+labels: # Метки в формате key: value
+key: value
+spec: # Описание Pod
+containers: # Описание контейнеров внутри Pod
+- name: # Название контейнера
+image: # Образ из которого создается контейне
+```
+
+- Поместите манифест web-pod.yaml в директорию kubernetesintro и примените его:
+После этого в кластере в namespace default должен появиться запущенный pod web:
+
+```console
+kubectl apply -f web-pod.yaml
+kubectl get pods
+```
+
+- В Kubernetes есть возможность получить манифест уже запущенного в кластере pod.
+В подобном манифесте помимо описания pod будут фигурировать служебные поля (например, различные статусы) и значения, подставленные по умолчанию.
+
+```console
+kubectl get pod web -o yaml
+```
+
+-Другой способ посмотреть описание pod - использовать ключ describe.  
+ Команда позволяет отследить текущее состояниеобъекта, а также события, которые с ним происходили
+```console
+kubectl describe pod web
+```
+
+- При этом kubectl describe - хороший старт для поиска причин проблем с запуском pod.
+Укажите в манифесте несуществующий тег образа web и примените его заново (kubectl apply -f web-pod.yaml).    
+Статус pod (kubectl get pods) должен измениться на ErrImagePull/ImagePullBackOff, а команда kubectl describe pod web поможет понять причину такого поведения:
+
+```console
+Events:
+Type Reason Age From Message
+---- ------ ---- ---- -------
+Warning Failed 2s kubelet, minikube Failed to pull image "web:broken-tag": rpc
+error: code = Unknown desc = Error response from daemon: manifest for web:broken-tag not
+found
+```
+- Добавим в наш pod , генерирующий страницуindex.html.
+Init контейнеры описываются аналогично обычным контейнерам в pod.  
+Добавьте в манифест web-pod.yaml описание init контейнера, соответствующее следующим требованиям:
+image init контейнера должен содержать wget (например, можноиспользовать busybox:1.31.0 или любой другой busyboxактуальной версии)  
+command init контейнера (аналог ENTRYPOINT в Dockerfile) укажите следующую:
+```console
+['sh', '-c', 'wget -O- https://tinyurl.com/otus-k8s-intro | sh']
+```
+
+- Volumes  
+Для того, чтобы файлы, созданные в init контейнере, были доступны основному контейнеру в pod нам понадобится использовать volume типа emptyDir.  
+У контейнера и у init контейнера должны быть описаны
+```yaml
+volumeMounts следующего вида
+volumeMounts:
+- name: app
+mountPath: /app
+```
+volume должен быть описан в спецификации pod
+
+```yaml
+volumes:
+- name: app
+emptyDir: {}
+``
+
+- Удалите запущенный pod web из кластера (kubectl delete podweb) и примените обновленный манифест web-pod.yaml
+Отслеживать происходящее можно с использованием команды
+kubectl get pods -w
+
+Должен получиться аналогичный вывод:
+```console
+kubectl apply -f web-pod.yaml && kubectl get pods -w
+pod/web created
+NAME READY STATUS RESTARTS AGE
+web 0/1 Init:0/1 0 0s
+web 0/1 Init:0/1 0 1s
+web 0/1 PodInitializing 0 2s
+web 1/1 Running 0 3s
+```console
+
+- TEST
+
+Проверим работоспособность web сервера.
+```console
+kubectl port-forward --address 0.0.0.0 pod/web 8000:8000
+```  
+Если все выполнено правильно, на локальном компьютере по
+ссылке http://localhost:8000/index.html должна открыться страница
