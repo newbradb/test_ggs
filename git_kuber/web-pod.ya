@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: git-test
+labels: 
+ key: value
+spec:
+ type: LoadBalancer
+ externalIPs:
+  - 192.168.0.10
+ containers:
+  - name: test-container
+    image: mr4ilintan/test-container
+    ports:
+    - containerPort: 8000
+~                             
