@@ -129,13 +129,36 @@ awk '{print $9}' test.txt | grep '403'
 
 ```
 
-###Task with * . Write script to show which pages Google checked from the website 
+### Task with * . Write script to show which pages Google checked from the website 
 
-### KUBER
+## KUBER
 
-- Dockerfile, в котором будет описан образ:
+### Dockerfile with image description:
 
-1. Запускающий web-сервер на порту 8000 (можно использоватьлюбой способ)
+1. Launch web-server on 8000 port (with any means necessary)
+
+We need to copy default configs into container with next commands
+
+```console
+COPY default.conf /etc/nginx/conf.d/default.conf #  copy default nginx conf from pc into container folder /etc/nginx/conf.d
+COPY nginx.conf /etc/nginx/nginx.conf # copy nginx conf from pc into container folder /etc/nginx
+
+```
+Now we need to edit default.conf:
+
+- change port we'r listening to 8000
+
+```console
+listen       8000;
+
+```
+
+- change root folder to /app 
+```console
+root   /app;
+
+```
+
 2. Отдающий содержимое директории /app внутри контейнера
 (например, если в директории /app лежит файл homework.html, то при запуске контейнера данный файл должен быть доступен по
 URL http://localhost:8000/homework.html)
