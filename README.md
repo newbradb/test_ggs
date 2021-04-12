@@ -171,9 +171,35 @@ include /etc/nginx/conf.d/*.conf;
 
 In previous part we already made /app root folder, now we just need to fill it and keep in project directory
 
-- После того, как Dockerfile будет готов:
-В корне репозитория создайте директорию kubernetesintro/web и поместите туда готовый Dockerfile
-Соберите из Dockerfile образ контейнера и поместите его в публичный Container Registry (например, Docker Hub)
+- After the Dockerfile is ready:
+In root repository cready kubernetesintro/web folder and put the Dockerfile inthere.
+Build an image from Dockerfile and push it to the Container Registry (Docker Hub for example)
+
+To build an image we need to execute next command 
+
+```console
+docker build -t webserver .
+```
+
+Now we need to prepare image for pushing :
+
+```console
+docker tag webserver mr4ilintan/webserver
+```
+
+log in into registry:
+
+```console
+docker login
+```
+and push:
+
+```console
+docker push mr4ilintan/webserver
+```
+
+
+
 
 - Напишем манифест web-pod.yaml для создания pod web c
 меткой app со значением web, содержащего один контейнер с
