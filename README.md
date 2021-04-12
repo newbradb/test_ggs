@@ -201,7 +201,7 @@ docker push mr4ilintan/webserver
 
 
 
-- Create web-pod.yaml manifest to create pod web with app label, with web name, which consists of one web container. You have to use image you pushed to Docker Hub before.
+- Create web-pod.yaml manifest which creates pod web with app label, with web name, consists of one web container. You have to use image you pushed to Docker Hub before.
 You can use the following template:
 
 ```yaml
