@@ -154,12 +154,19 @@ listen       8000;
 ```
 
 - change root folder to /app 
+
 ```console
 root   /app;
 
 ```
+Next lets add next parameter to nginx.conf file:
 
-2. Отдающий содержимое директории /app внутри контейнера
+```console
+include /etc/nginx/conf.d/*.conf;
+
+```
+
+2. Pass the content of /app folder into the container
 (например, если в директории /app лежит файл homework.html, то при запуске контейнера данный файл должен быть доступен по
 URL http://localhost:8000/homework.html)
 
