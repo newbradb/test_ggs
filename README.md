@@ -201,11 +201,8 @@ docker push mr4ilintan/webserver
 
 
 
-- Напишем манифест web-pod.yaml для создания pod web c
-меткой app со значением web, содержащего один контейнер с
-названием web. Необходимо использовать ранее собранный образ
-с Docker Hub.
-При написании манифеста можно воспользоваться следующим шаблоном:
+- Create web-pod.yaml manifest to create pod web with app label, with web name, which consists of one web container. You have to use image you pushed to Docker Hub before.
+You can use the following template:
 
 ```yaml
 apiVersion: v1 # Версия API
