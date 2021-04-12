@@ -217,8 +217,8 @@ containers: # Описание контейнеров внутри Pod
 image: # Образ из которого создается контейне
 ```
 
-- Поместите манифест web-pod.yaml в директорию kubernetesintro и примените его:
-После этого в кластере в namespace default должен появиться запущенный pod web:
+- Place web-pod.yaml into kubernetesintro and use it:
+In namespace default cluster a new pod web should appear:
 
 ```console
 kubectl apply -f web-pod.yaml
