@@ -13,4 +13,4 @@ spec:
     image: mr4ilintan/test-container
     ports:
     - containerPort: 8000
-~                             
+                            

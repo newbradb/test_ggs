@@ -167,8 +167,9 @@ include /etc/nginx/conf.d/*.conf;
 ```
 
 2. Pass the content of /app folder into the container
-(например, если в директории /app лежит файл homework.html, то при запуске контейнера данный файл должен быть доступен по
-URL http://localhost:8000/homework.html)
+(if there is a homework.html file in app folder, it must be reachable via URL http://localhost:8000/homework.html)
+
+In previous part we already made app root folder, now we just need to fill it and keep in project directory
 
 - После того, как Dockerfile будет готов:
 В корне репозитория создайте директорию kubernetesintro/web и поместите туда готовый Dockerfile
