@@ -197,24 +197,20 @@ and push:
 ```console
 docker push mr4ilintan/webserver
 ```
-
-
-
-
 - Create web-pod.yaml manifest which creates pod web with app label, with web name, consists of one web container. You have to use image you pushed to Docker Hub before.
 You can use the following template:
 
 ```yaml
-apiVersion: v1 # Версия API
-kind: Pod # Объект, который создаем
+apiVersion: v1 # API version
+kind: Pod # Object, which we create 
 metadata:
-name: # Название Pod
-labels: # Метки в формате key: value
+name: # Pod name
+labels: # Format key: value labels
 key: value
-spec: # Описание Pod
-containers: # Описание контейнеров внутри Pod
-- name: # Название контейнера
-image: # Образ из которого создается контейне
+spec: # Pod description
+containers: # Pod's containers description
+- name: # Container name
+image: # Image, from which we create container
 ```
 
 - Place web-pod.yaml into kubernetesintro and use it:
@@ -225,22 +221,23 @@ kubectl apply -f web-pod.yaml
 kubectl get pods
 ```
 
-- В Kubernetes есть возможность получить манифест уже запущенного в кластере pod.
-В подобном манифесте помимо описания pod будут фигурировать служебные поля (например, различные статусы) и значения, подставленные по умолчанию.
+- In Kubernetes there is an ability to get manifest from running pod.
+Except pod description there will be different service field (for exmaple different statuses).
 
 ```console
 kubectl get pod web -o yaml
 ```
 
--Другой способ посмотреть описание pod - использовать ключ describe.  
- Команда позволяет отследить текущее состояниеобъекта, а также события, которые с ним происходили
+-One more way to check running pod description is describe.  
+ Command lets you see object status and events, which happend to pod.
+
 ```console
 kubectl describe pod web
 ```
 
-- При этом kubectl describe - хороший старт для поиска причин проблем с запуском pod.
-Укажите в манифесте несуществующий тег образа web и примените его заново (kubectl apply -f web-pod.yaml).    
-Статус pod (kubectl get pods) должен измениться на ErrImagePull/ImagePullBackOff, а команда kubectl describe pod web поможет понять причину такого поведения:
+- kubectl describe - is a nice start to look for issue reasons with launching. 
+Indicate a non-existing tag image in manifest and appy it once more (kubectl apply -f web-pod.yaml).    
+Pod status (kubectl get pods) should change to ErrImagePull/ImagePullBackOff, and kubectl describe pod web command will let us help why it did:
 
 ```console
 Events:
@@ -250,25 +247,26 @@ Warning Failed 2s kubelet, minikube Failed to pull image "web:broken-tag": rpc
 error: code = Unknown desc = Error response from daemon: manifest for web:broken-tag not
 found
 ```
-- Добавим в наш pod , генерирующий страницуindex.html.
-Init контейнеры описываются аналогично обычным контейнерам в pod.  
-Добавьте в манифест web-pod.yaml описание init контейнера, соответствующее следующим требованиям:
-image init контейнера должен содержать wget (например, можноиспользовать busybox:1.31.0 или любой другой busyboxактуальной версии)  
-command init контейнера (аналог ENTRYPOINT в Dockerfile) укажите следующую:
+- Lets add into our pod line, which generetes index.html file.
+Init containers are described the same as common containers in pod.  
+Add into web-pod.yaml manifest init container description, which states next:
+Containers image init should content wget (For example busybox:1.31.0 or any up to date version)  
+Containers command init (ENTRYPOINT analog in Dockerfile) type next:
+
 ```console
 ['sh', '-c', 'wget -O- https://tinyurl.com/otus-k8s-intro | sh']
 ```
 
 - Volumes  
-Для того, чтобы файлы, созданные в init контейнере, были доступны основному контейнеру в pod нам понадобится использовать volume типа emptyDir.  
-У контейнера и у init контейнера должны быть описаны
+To let files, created in init container, be accessed for main container in pod we need to use type emptyDir volume.   
+Both container and init container must be described:
 ```yaml
-volumeMounts следующего вида
+volumeMounts of the following kind
 volumeMounts:
 - name: app
 mountPath: /app
 ```
-volume должен быть описан в спецификации pod
+volume should be described in pod spec
 
 ```yaml
 volumes:
@@ -276,11 +274,11 @@ volumes:
 emptyDir: {}
 ```
 
-- Удалите запущенный pod web из кластера (kubectl delete podweb) и примените обновленный манифест web-pod.yaml
-Отслеживать происходящее можно с использованием команды
-kubectl get pods -w
+- Delete running pod web from cluster (kubectl delete podweb) and apply renewd web-pod.yaml manifest.
+To track down whats happening to pod you can use kubectl get pods -w command.
 
-Должен получиться аналогичный вывод:
+Should be similar output : 
+
 ```console
 kubectl apply -f web-pod.yaml && kubectl get pods -w
 pod/web created
@@ -293,9 +291,9 @@ web 1/1 Running 0 3s
 
 - TEST
 
-Проверим работоспособность web сервера.
+Lets check if web server works 
+
 ```console
 kubectl port-forward --address 0.0.0.0 pod/web 8000:8000
 ```  
-Если все выполнено правильно, на локальном компьютере по
-ссылке http://localhost:8000/index.html должна открыться страница
+If everything done right, a new page should be opened via http://localhost:8000/index.html URL.

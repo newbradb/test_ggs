@@ -8,6 +8,9 @@ spec:
  containers:
   - name: web-container
     image: mr4ilintan/webserver
+    volumeMounts:
+     - mountPath: /app
+       name: app
  initContainers:
   - name: init-web-container
     image: busybox:1.31
