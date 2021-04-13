@@ -228,7 +228,7 @@ Except pod description there will be different service field (for exmaple differ
 kubectl get pod web -o yaml
 ```
 
--One more way to check running pod description is describe.  
+- One more way to check running pod description is describe.  
  Command lets you see object status and events, which happend to pod.
 
 ```console
