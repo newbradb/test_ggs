@@ -362,5 +362,5 @@ kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never 
 Подсказки можно найти:  
 В логах - kubectl logs frontend  
 В [манифесте](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml)   
-В результате, после применения исправленного манифеста pod frontend должен находиться в статусе Running (опустим вопрос,действительно ли микросервис работает)
--Поместите исправленный манифест frontend-pod-healthy.yaml в репо
+В результате, после применения исправленного манифеста pod frontend должен находиться в статусе Running (опустим вопрос,действительно ли микросервис работает)  
+- Поместите исправленный манифест frontend-pod-healthy.yaml в репо
