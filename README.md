@@ -297,3 +297,31 @@ Lets check if web server works
 kubectl port-forward --address 0.0.0.0 pod/web 8000:8000
 ```  
 If everything done right, a new page should be opened via http://localhost:8000/index.html URL.
+
+##Kubernetes controllers
+
+Для начала установим kind и создадим кластер.
+
+Будем использовать следующую конфигурацию нашего локального кластера - kind-config.yaml:
+
+```yaml
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+- role: control-plane
+- role: control-plane
+- role: control-plane
+- role: worker
+- role: worker
+- role: worker
+```
+
+Запустите создание кластера kind:
+
+После появления отчета об успешном создании убедитесь что развернуто три master ноды и три worker ноды:
+
+```console
+$ kind create cluster --config kind-config.yaml
+
+$ kubectl get nodes
+```
