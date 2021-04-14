@@ -326,7 +326,41 @@ $ kind create cluster --config kind-config.yaml
 $ kubectl get nodes
 ```
 
-Перейдем к приложению Hipster Shop. 
+### Перейдем к приложению Hipster Shop. 
 Начнем с микросервиса frontend. Его исходный код доступен [тут](https://github.com/GoogleCloudPlatform/microservices-demo/tree/master/src/frontend)  
 - Склонируйте [репозиторий](https://github.com/GoogleCloudPlatform/microservices-demo) и соберите собственный образ для frontend (используйте готовый Dockerfile)
 - Поместите собранный образ на Docker Hub
+
+Рассмотрим альтернативный способ запуска pod в нашем Kubernetes кластере.  
+Вы уже умеете работать с манифестами (и это наиболее корректный подход к развертыванию ресурсов в Kubernetes), но
+иногда бывает удобно использовать ad-hoc режим и возможностиKubectl для создания ресурсов
+
+Разберем пример для запуска frontend pod:
+
+```console 
+kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never
+```
+
+ - kubectl run - запустить ресурс
+ - frontend - с именем frontend
+ - --image - из образа avtandilko/hipster-frontend:v0.0.1 (подставьте свой образ)
+ - --restart=Never указываем на то, что в качестве ресурса запускаем pod. [Details](https://kubernetes.io/docs/reference/kubectl/conventions/)
+
+Один из распространенных кейсов использования ad-hoc режима - генерация манифестов средствами kubectl:  
+```console
+kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never --dryrun -o yaml > frontend-pod.yaml
+```
+Рассмотрим дополнительные ключи:
+- --dry-run - вывод информации о ресурсе без его реальногосоздания
+- -o yaml - форматирование вывода в YAML
+- > frontend-pod.yaml - перенаправление вывода в файл
+
+### TASK
+
+- Выясните причину, по которой pod frontend находится в статусе Error
+- Cоздайте новый манифест frontend-pod-healthy.yaml. При егоприменении ошибка должна исчезнуть. 
+Подсказки можно найти:
+В логах - kubectl logs frontend
+В [манифесте](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml) 
+В результате, после применения исправленного манифеста pod frontend должен находиться в статусе Running (опустим вопрос,действительно ли микросервис работает)
+-Поместите исправленный манифест frontend-pod-healthy.yaml в репо
