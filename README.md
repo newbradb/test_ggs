@@ -325,3 +325,8 @@ $ kind create cluster --config kind-config.yaml
 
 $ kubectl get nodes
 ```
+
+Перейдем к приложению Hipster Shop. 
+Начнем с микросервиса frontend. Его исходный код доступен [тут](https://github.com/GoogleCloudPlatform/microservices-demo/tree/master/src/frontend)  
+- Склонируйте [репозиторий](https://github.com/GoogleCloudPlatform/microservices-demo) и соберите собственный образ для frontend (используйте готовый Dockerfile)
+- Поместите собранный образ на Docker Hub
