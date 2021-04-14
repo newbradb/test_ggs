@@ -353,14 +353,14 @@ kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never 
 Рассмотрим дополнительные ключи:
 - --dry-run - вывод информации о ресурсе без его реальногосоздания
 - -o yaml - форматирование вывода в YAML
-- > frontend-pod.yaml - перенаправление вывода в файл
+- ```> frontend-pod.yaml``` - перенаправление вывода в файл
 
 ### TASK
 
 - Выясните причину, по которой pod frontend находится в статусе Error
-- Cоздайте новый манифест frontend-pod-healthy.yaml. При егоприменении ошибка должна исчезнуть. 
-Подсказки можно найти:
-В логах - kubectl logs frontend
-В [манифесте](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml) 
+- Cоздайте новый манифест frontend-pod-healthy.yaml. При егоприменении ошибка должна исчезнуть.   
+Подсказки можно найти:  
+В логах - kubectl logs frontend  
+В [манифесте](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml)   
 В результате, после применения исправленного манифеста pod frontend должен находиться в статусе Running (опустим вопрос,действительно ли микросервис работает)
 -Поместите исправленный манифест frontend-pod-healthy.yaml в репо
