@@ -300,9 +300,9 @@ If everything done right, a new page should be opened via http://localhost:8000/
 
 ## Kubernetes controllers
 
-Для начала установим kind и создадим кластер.
+To start with, lets install kind and create cluster.
 
-Будем использовать следующую конфигурацию нашего локального кластера - kind-config.yaml:
+We will be using the following configuration for our local cluster - kind-config.yaml:
 
 ```yaml
 kind: Cluster
@@ -316,9 +316,9 @@ nodes:
 - role: worker
 ```
 
-Запустите создание кластера kind:
+Launch kind cluster creation :
 
-После появления отчета об успешном создании убедитесь что развернуто три master ноды и три worker ноды:
+After command execution there must be a successful output, about creating 3 master nodes and 3 worker nodes:
 
 ```console
 $ kind create cluster --config kind-config.yaml
