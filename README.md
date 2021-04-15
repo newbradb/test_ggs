@@ -362,4 +362,4 @@ You can find tips:
 In logs - kubectl logs frontend  
 In [manifest](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml)   
 After applying healty manifest pod frontend must be in Running status (Doesnt matter if microservice really works or not)  
--Push the frontend-pod-healthy.yaml manifest to the repo
+- Push the frontend-pod-healthy.yaml manifest to the repo
