@@ -326,41 +326,40 @@ $ kind create cluster --config kind-config.yaml
 $ kubectl get nodes
 ```
 
-### Перейдем к приложению Hipster Shop. 
-Начнем с микросервиса frontend. Его исходный код доступен [тут](https://github.com/GoogleCloudPlatform/microservices-demo/tree/master/src/frontend)  
-- Склонируйте [репозиторий](https://github.com/GoogleCloudPlatform/microservices-demo) и соберите собственный образ для frontend (используйте готовый Dockerfile)
-- Поместите собранный образ на Docker Hub
+### Hipster Shop app. 
+Lets start from frontend microservice. It's code can be found [here] (https://github.com/GoogleCloudPlatform/microservices-demo/tree/master/src/frontend)  
+- Clone [repo](https://github.com/GoogleCloudPlatform/microservices-demo) and build own image for frontend service (from prepared by google Dockerfile)
+- Push the image to Docker Hub
 
-Рассмотрим альтернативный способ запуска pod в нашем Kubernetes кластере.  
-Вы уже умеете работать с манифестами (и это наиболее корректный подход к развертыванию ресурсов в Kubernetes), но
-иногда бывает удобно использовать ad-hoc режим и возможностиKubectl для создания ресурсов
+Lets check out an alternative way to launch pod in our Kubernetes cluster.  
+You already know how to work with manifests (and its the most correct way to set up resources in Kubernetes), but sometimes its better to use ad-hoc and Kubectl
 
-Разберем пример для запуска frontend pod:
+Lets go through frontend pod launching example :
 
 ```console 
 kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never
 ```
 
- - kubectl run - запустить ресурс
- - frontend - с именем frontend
- - --image - из образа avtandilko/hipster-frontend:v0.0.1 (подставьте свой образ)
- - --restart=Never указываем на то, что в качестве ресурса запускаем pod. [Details](https://kubernetes.io/docs/reference/kubectl/conventions/)
+ - kubectl run - launch resource
+ - frontend - named frontend
+ - --image - from image avtandilko/hipster-frontend:v0.0.1 (input your own image)
+ - --restart=Never means that we launch pod as a resource . [Details](https://kubernetes.io/docs/reference/kubectl/conventions/)
 
-Один из распространенных кейсов использования ad-hoc режима - генерация манифестов средствами kubectl:  
+One of the most common cases of ad-hoc usage - generating manifests with kubectl :  
 ```console
 kubectl run frontend --image avtandilko/hipster-frontend:v0.0.1 --restart=Never --dryrun -o yaml > frontend-pod.yaml
 ```
-Рассмотрим дополнительные ключи:
-- --dry-run - вывод информации о ресурсе без его реальногосоздания
-- -o yaml - форматирование вывода в YAML
-- ```> frontend-pod.yaml``` - перенаправление вывода в файл
+Lets go through some new keys:
+- --dry-run - resource info output without its real creation 
+- -o yaml - output format into YAML
+- ```> frontend-pod.yaml``` - output into file
 
 ### TASK
 
-- Выясните причину, по которой pod frontend находится в статусе Error
-- Cоздайте новый манифест frontend-pod-healthy.yaml. При егоприменении ошибка должна исчезнуть.   
-Подсказки можно найти:  
-В логах - kubectl logs frontend  
-В [манифесте](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml)   
-В результате, после применения исправленного манифеста pod frontend должен находиться в статусе Running (опустим вопрос,действительно ли микросервис работает)  
-- Поместите исправленный манифест frontend-pod-healthy.yaml в репо
+- Find out a reason, why pod frontend is in Error status 
+- Create a new frontend-pod-healthy.yaml manifest. After applying it error should begone.   
+You can find tips:  
+In logs - kubectl logs frontend  
+In [manifest](https://github.com/GoogleCloudPlatform/microservices-demo/blob/master/kubernetes-manifests/frontend.yaml)   
+After applying healty manifest pod frontend must be in Running status (Doesnt matter if microservice really works or not)  
+-Push the frontend-pod-healthy.yaml manifest to the repo
