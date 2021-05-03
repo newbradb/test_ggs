@@ -20,12 +20,12 @@
 
 ## Permissions
 
--   1. Create test directory and block access for all to it.
+-   Create test directory and block access for all to it.
 
--   2. Try to remove that directory.
+-   Try to remove that directory.
 
 
--   3. Create simple script which prints current date. Try to execute it.
+-    Create simple script which prints current date. Try to execute it.
 
 
 ## Log checking
