@@ -18,6 +18,8 @@
 
 -    print the text from the test1/test1.txt file.
 
+- check the size of test1 directory
+
 ## Permissions
 
 -   Create test directory and block access for all to it.
