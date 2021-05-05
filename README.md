@@ -52,3 +52,6 @@
 
 - Task with * . Write script to show which pages Google checked from the website 
 
+## Replace
+
+Replace IP address with most requests on 127.0.0.1 in test.txt file 
