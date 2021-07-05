@@ -2,6 +2,10 @@
 
 - Create directory test1
 
+```console
+mkdir test
+```
+
 - Create file test1.txt inside the test1 directory.
 
 -   Create copy of folder test1 with name test2.  
